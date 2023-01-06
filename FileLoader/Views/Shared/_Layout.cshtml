@@ -6,11 +6,11 @@
     <title>@ViewData["Title"] - FileLoader</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     <link rel="stylesheet" href="~/FileLoader.styles.css" asp-append-version="true" />
 </head>
 <body>
-   
+
     <div class="page-wrapper chiller-theme toggled">
         <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
             <i class="fas fa-bars"></i>
@@ -39,7 +39,7 @@
                         </span>
                     </div>
                 </div>
-                <!-- sidebar-header  -->         
+                <!-- sidebar-header  -->
                 <div class="sidebar-menu">
                     <ul>
                         <li class="header-menu">
@@ -49,18 +49,19 @@
                             <a href="#">
                                 <i class="fa fa-tachometer-alt"></i>
                                 <span>Carga Archivos</span>
-                                
+
                             </a>
+                         
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="#">
-                                            FOCREDE                                            
+                                        <a asp-area="Cliente" asp-controller="CargaArchivos" asp-action="Index">
+                                            FOCREDE
                                         </a>
-                                    </li>                                    
+                                    </li>
                                 </ul>
                             </div>
-                        </li>                       
+                        </li>
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fa fa-chart-line"></i>
@@ -70,23 +71,24 @@
                                 <ul>
                                     <li>
                                         <a href="#">FOCREDE</a>
-                                    </li>                                    
+                                    </li>
                                 </ul>
                             </div>
                         </li>
-                       
+
                         <li class="header-menu">
                             <span>Administrador</span>
                         </li>
                         <li>
-                            <a href="#">
+                            <a asp-area="Admin" asp-controller="Usuarios" asp-action="Register">
                                 <i class="fa fa-book"></i>
                                 <span>Usuarios</span>
-                                
+
                             </a>
-                        </li>                        
-                       
+                        </li>
+
                     </ul>
+                    <partial name="_LoginPartial" />
                 </div>
                 <!-- sidebar-menu  -->
             </div>
@@ -112,9 +114,8 @@
         <!-- sidebar-wrapper  -->
 
         <main class="page-content">
-            <div class="container-fluid">
-                <!--*************************  cuerpo *******************-->
-                <h2>Carga de Archivos Txt</h2>
+            <div class="container">
+                <!--*************************  cuerpo *******************-->               
                 <hr>
                 @RenderBody()
                 <hr />
@@ -132,14 +133,14 @@
             </div>
         </main>
 
-    </div>   
+    </div>
 
 
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/sweetalert/sweetalert.min.js"></script>
+    <script src="~/lib/sweetalert/sweetalert.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
@@ -183,4 +184,3 @@
 
     });
 </script>
-   

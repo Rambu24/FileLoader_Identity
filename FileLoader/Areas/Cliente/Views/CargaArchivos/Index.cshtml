@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Focrede</h3>
+
+<div class="row">
+    <div class="form-group col-md-6">
+        <div class="alert alert-info" role="alert">
+            <div class="col-sm-6 offset-md-2 text-center">
+                <label for="staticEmail" class="col-sm-12 col-form-label">Seleccione el archivo:</label>
+            </div>
+            <div class="col-sm-6 offset-md-2 text-center">
+                <input type="file" class="btn btn-light form-control" onchange="ExportToTable()" id="txtFile" title="Seleccionar el archivo Txt" />
+                <i class="fas fa-check-square" id="infoListo"></i>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="form-group col-md-5">
+        <div class="alert alert-info" role="alert">
+            <div class="col-sm-6 offset-md-2 text-center">
+                <label for="monedaReporte" class="col-sm-12 col-form-label">Seleccione la moneda:</label>
+            </div>
+            <div class="col-sm-6 offset-md-2 text-center">
+                <select name="monedaReporte" id="monedaReporte" class="form-control">
+                    <option value="0">Seleccione...</option>
+                    <option value="1">Colones</option>
+                    <option value="2">Dólares</option>
+                    <option value="3">Euros</option>
+                </select>
+            </div>
+            <br />
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<div class="row">
+    <div class="col-sm-12 text-center">
+        <button type="button" id="insertar_btn" class="btn btn-success ml-5" data-toggle="modal" data-target="#ModalDatosReporteTxt" title="Botón para enviar datos" onclick="ReadTxt(true)" disabled>
+            <i class="fas fa-check"></i>
+            Ejecutar carga
+        </button>
+    </div>
+
+</div>
+
+
+<!-- Modal Datos Reporte Txt-->
+<div class="modal fade" id="ModalDatosReporteTxt" role="dialog" style="padding-left:20px; z-index: 9999" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-aqua-gradient">
+                <h5 class="modal-title ml-2 text-success">
+                    <i class="fas fa-plus-circle">
+                    </i>&nbsp; Reporte Txt
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" onclick="CerrarModalReporteTxt()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <!--Fila 1 del Modal-->
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="card-title">
+                                    <i class="fas fa-file-alt text-navy"></i>
+                                    Reporte Focrede:
+                                </h6>
+                            </div>
+
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover" id="tableReporteTxt">
+                                    <thead>
+                                        <tr id="theadTxt">
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody id="tBodyTxt">
+                                    </tbody>
+
+
+
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                    </div><!--Fin Row-->
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer float-right">
+                <button type="button" class="btn btn-dark" onclick="CerrarModalReporteTxt()" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+    <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script src="~/js/CargaArchivoFocrede.js"></script>
+}
