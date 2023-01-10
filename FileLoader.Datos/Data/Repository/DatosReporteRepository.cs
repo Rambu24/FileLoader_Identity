@@ -1,5 +1,6 @@
 ﻿using FileLoader.Datos.Data.Repository.IRepository;
 using FileLoader.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,10 @@ namespace FileLoader.Datos.Data.Repository
         public void Update(DatosReporteCLS datosreporte)
         {
             var objDesdeDb = _db.DatosReporte.FirstOrDefault(s => s.Indice == datosreporte.Indice);
-            objDesdeDb.Fecha_Reporte = datosreporte.Fecha_Reporte;
-            objDesdeDb.Moneda = datosreporte.Moneda;
+            objDesdeDb.Fecha_Reporte = datosreporte.Fecha_Reporte;   
 
             _db.SaveChanges();
         }
+
     }
 }

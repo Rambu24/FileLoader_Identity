@@ -16,10 +16,13 @@ namespace FileLoader.Datos.Data.Repository
         {
             _db = db;
             DatosReporte = new DatosReporteRepository(_db);
+            BalanceFocrede = new BalanceFocredeRepository(_db);
         }
 
 
         public IDatosReporteRepository DatosReporte { get; private set; }
+
+        public IBalanceFocredeRepository BalanceFocrede { get; private set; }
 
         public void Dispose()
         {

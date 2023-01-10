@@ -1,125 +1,374 @@
-﻿@{
+﻿@model IEnumerable<FileLoader.Models.DatosReporteCLS>
+@{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";    
+
+    ChartJSCore.Models.Chart chart = (ChartJSCore.Models.Chart)ViewData["chart"];
+    ChartJSCore.Models.Chart verticalBarChart = (ChartJSCore.Models.Chart)ViewData["VerticalBarChart"];
+    int ConteoReportesTotal = ViewBag.ConteoReportesTotal;
 }
 
-<h3>Focrede</h3>
+@section Styles
+    {
+    <link href="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}
 
-<div class="row">
-    <div class="form-group col-md-6">
-        <div class="alert alert-info" role="alert">
-            <div class="col-sm-6 offset-md-2 text-center">
-                <label for="staticEmail" class="col-sm-12 col-form-label">Seleccione el archivo:</label>
-            </div>
-            <div class="col-sm-6 offset-md-2 text-center">
-                <input type="file" class="btn btn-light form-control" onchange="ExportToTable()" id="txtFile" title="Seleccionar el archivo Txt" />
-                <i class="fas fa-check-square" id="infoListo"></i>
-            </div>
 
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Dashboard</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                    <div class="card-body"><h3><strong>@ConteoReportesTotal</strong></h3>Reportes almacenados</div>              
+            </div>
         </div>
-
-
-    </div>
-
-    <div class="form-group col-md-5">
-        <div class="alert alert-info" role="alert">
-            <div class="col-sm-6 offset-md-2 text-center">
-                <label for="monedaReporte" class="col-sm-12 col-form-label">Seleccione la moneda:</label>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                    <div class="card-body"><h3><strong>@ConteoReportesTotal</strong></h3>Reportes Activos</div>               
             </div>
-            <div class="col-sm-6 offset-md-2 text-center">
-                <select name="monedaReporte" id="monedaReporte" class="form-control">
-                    <option value="0">Seleccione...</option>
-                    <option value="1">Colones</option>
-                    <option value="2">Dólares</option>
-                    <option value="3">Euros</option>
-                </select>
-            </div>
-            <br />
         </div>
-
-
-    </div>
-
-
-</div>
-
-<div class="row">
-    <div class="col-sm-12 text-center">
-        <button type="button" id="insertar_btn" class="btn btn-success ml-5" data-toggle="modal" data-target="#ModalDatosReporteTxt" title="Botón para enviar datos" onclick="ReadTxt(true)" disabled>
-            <i class="fas fa-check"></i>
-            Ejecutar carga
-        </button>
-    </div>
-
-</div>
-
-
-<!-- Modal Datos Reporte Txt-->
-<div class="modal fade" id="ModalDatosReporteTxt" role="dialog" style="padding-left:20px; z-index: 9999" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header bg-aqua-gradient">
-                <h5 class="modal-title ml-2 text-success">
-                    <i class="fas fa-plus-circle">
-                    </i>&nbsp; Reporte Txt
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" onclick="CerrarModalReporteTxt()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                    <div class="card-body"><h3><strong>@ConteoReportesTotal</strong></h3>Reportes Inactivos</div>                
             </div>
-            <div class="modal-body">
-
-                <!--Fila 1 del Modal-->
-                <div class="row">
-                    <div class="col-12">
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h6 class="card-title">
-                                    <i class="fas fa-file-alt text-navy"></i>
-                                    Reporte Focrede:
-                                </h6>
-                            </div>
-
-                            <div class="card-body table-responsive p-0">
-                                <table class="table table-hover" id="tableReporteTxt">
-                                    <thead>
-                                        <tr id="theadTxt">
-                                        </tr>
-                                    </thead>
-
-
-                                    <tbody id="tBodyTxt">
-                                    </tbody>
-
-
-
-                                </table>
-                            </div>
-                        </div>
-
-
-
-                    </div><!--Fin Row-->
-
-
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                 <div class="card-body"><h3><strong>@ConteoReportesTotal</strong></h3>Reportes Enviados</div>                 
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-area me-1"></i>
+                    Histórico de reportes generados
                 </div>
+                @*<div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>*@
+                    <div class="card-body"><canvas id="lineChart"></canvas></div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar me-1"></i>
+                    Histórico de reportes generados
+                </div>
+                    <div class="card-body"><canvas id="verticalBarChart" width="100%" height="40"></canvas></div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Detalle de Reportes Almacenados
+        </div>
+        <div class="card-body">
 
-            </div>
-            <div class="modal-footer float-right">
-                <button type="button" class="btn btn-dark" onclick="CerrarModalReporteTxt()" data-dismiss="modal">Cerrar</button>
-            </div>
+                <table id="TableReportes" class="table table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Id Reporte</td>
+                            <td>Nombre Reporte</td>
+                            <td>Fecha Reporte</td>
+                            <td>Fecha Registro</td>
+                            <td>Usuario</td>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+
+                        @foreach(var item in Model){
+                            <tr>
+                            <td>@item.Indice</td>
+                            <td>@item.Catalogo_ReportesCLS.Nombre_Reporte</td>
+                            <td>@item.Fecha_Reporte</td>
+                            <td>@item.Fecha_Registro</td>
+                            <td>@item.Usuario_Generador</td>
+                        </tr>
+                        }
+
+                    </tbody>
+
+
+                </table>
         </div>
     </div>
 </div>
 
 
-@section scripts{
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
+@section Scripts{
+    <script src="~/lib/datatables.net/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables.net-bs4/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/chart-js/chart.min.js"></script>  
+    <script>
+        $(document).ready(function () {
+            $('#TableReportes').DataTable(
+                {
+                    "order": [[0, 'asc']],
+                    language: {
+                        "processing": "Procesando...",
+                        "lengthMenu": "Mostrar _MENU_ registros",
+                        "zeroRecords": "No se encontraron resultados",
+                        "emptyTable": "Ningún dato disponible en esta tabla",
+                        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "search": "Buscar:",
+                        "infoThousands": ",",
+                        "loadingRecords": "Cargando...",
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Último",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        },
+                        "aria": {
+                            "sortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sortDescending": ": Activar para ordenar la columna de manera descendente"
+                        },
+                        "buttons": {
+                            "copy": "Copiar",
+                            "colvis": "Visibilidad",
+                            "collection": "Colección",
+                            "colvisRestore": "Restaurar visibilidad",
+                            "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                            "copySuccess": {
+                                "1": "Copiada 1 fila al portapapeles",
+                                "_": "Copiadas %ds fila al portapapeles"
+                            },
+                            "copyTitle": "Copiar al portapapeles",
+                            "csv": "CSV",
+                            "excel": "Excel",
+                            "pageLength": {
+                                "-1": "Mostrar todas las filas",
+                                "_": "Mostrar %d filas"
+                            },
+                            "pdf": "PDF",
+                            "print": "Imprimir",
+                            "renameState": "Cambiar nombre",
+                            "updateState": "Actualizar",
+                            "createState": "Crear Estado",
+                            "removeAllStates": "Remover Estados",
+                            "removeState": "Remover",
+                            "savedStates": "Estados Guardados",
+                            "stateRestore": "Estado %d"
+                        },
+                        "autoFill": {
+                            "cancel": "Cancelar",
+                            "fill": "Rellene todas las celdas con <i>%d<\/i>",
+                            "fillHorizontal": "Rellenar celdas horizontalmente",
+                            "fillVertical": "Rellenar celdas verticalmentemente"
+                        },
+                        "decimal": ",",
+                        "searchBuilder": {
+                            "add": "Añadir condición",
+                            "button": {
+                                "0": "Constructor de búsqueda",
+                                "_": "Constructor de búsqueda (%d)"
+                            },
+                            "clearAll": "Borrar todo",
+                            "condition": "Condición",
+                            "conditions": {
+                                "date": {
+                                    "after": "Despues",
+                                    "before": "Antes",
+                                    "between": "Entre",
+                                    "empty": "Vacío",
+                                    "equals": "Igual a",
+                                    "notBetween": "No entre",
+                                    "notEmpty": "No Vacio",
+                                    "not": "Diferente de"
+                                },
+                                "number": {
+                                    "between": "Entre",
+                                    "empty": "Vacio",
+                                    "equals": "Igual a",
+                                    "gt": "Mayor a",
+                                    "gte": "Mayor o igual a",
+                                    "lt": "Menor que",
+                                    "lte": "Menor o igual que",
+                                    "notBetween": "No entre",
+                                    "notEmpty": "No vacío",
+                                    "not": "Diferente de"
+                                },
+                                "string": {
+                                    "contains": "Contiene",
+                                    "empty": "Vacío",
+                                    "endsWith": "Termina en",
+                                    "equals": "Igual a",
+                                    "notEmpty": "No Vacio",
+                                    "startsWith": "Empieza con",
+                                    "not": "Diferente de",
+                                    "notContains": "No Contiene",
+                                    "notStarts": "No empieza con",
+                                    "notEnds": "No termina con"
+                                },
+                                "array": {
+                                    "not": "Diferente de",
+                                    "equals": "Igual",
+                                    "empty": "Vacío",
+                                    "contains": "Contiene",
+                                    "notEmpty": "No Vacío",
+                                    "without": "Sin"
+                                }
+                            },
+                            "data": "Data",
+                            "deleteTitle": "Eliminar regla de filtrado",
+                            "leftTitle": "Criterios anulados",
+                            "logicAnd": "Y",
+                            "logicOr": "O",
+                            "rightTitle": "Criterios de sangría",
+                            "title": {
+                                "0": "Constructor de búsqueda",
+                                "_": "Constructor de búsqueda (%d)"
+                            },
+                            "value": "Valor"
+                        },
+                        "searchPanes": {
+                            "clearMessage": "Borrar todo",
+                            "collapse": {
+                                "0": "Paneles de búsqueda",
+                                "_": "Paneles de búsqueda (%d)"
+                            },
+                            "count": "{total}",
+                            "countFiltered": "{shown} ({total})",
+                            "emptyPanes": "Sin paneles de búsqueda",
+                            "loadMessage": "Cargando paneles de búsqueda",
+                            "title": "Filtros Activos - %d",
+                            "showMessage": "Mostrar Todo",
+                            "collapseMessage": "Colapsar Todo"
+                        },
+                        "select": {
+                            "cells": {
+                                "1": "1 celda seleccionada",
+                                "_": "%d celdas seleccionadas"
+                            },
+                            "columns": {
+                                "1": "1 columna seleccionada",
+                                "_": "%d columnas seleccionadas"
+                            },
+                            "rows": {
+                                "1": "1 fila seleccionada",
+                                "_": "%d filas seleccionadas"
+                            }
+                        },
+                        "thousands": ".",
+                        "datetime": {
+                            "previous": "Anterior",
+                            "next": "Proximo",
+                            "hours": "Horas",
+                            "minutes": "Minutos",
+                            "seconds": "Segundos",
+                            "unknown": "-",
+                            "amPm": [
+                                "AM",
+                                "PM"
+                            ],
+                            "months": {
+                                "0": "Enero",
+                                "1": "Febrero",
+                                "10": "Noviembre",
+                                "11": "Diciembre",
+                                "2": "Marzo",
+                                "3": "Abril",
+                                "4": "Mayo",
+                                "5": "Junio",
+                                "6": "Julio",
+                                "7": "Agosto",
+                                "8": "Septiembre",
+                                "9": "Octubre"
+                            },
+                            "weekdays": [
+                                "Dom",
+                                "Lun",
+                                "Mar",
+                                "Mie",
+                                "Jue",
+                                "Vie",
+                                "Sab"
+                            ]
+                        },
+                        "editor": {
+                            "close": "Cerrar",
+                            "create": {
+                                "button": "Nuevo",
+                                "title": "Crear Nuevo Registro",
+                                "submit": "Crear"
+                            },
+                            "edit": {
+                                "button": "Editar",
+                                "title": "Editar Registro",
+                                "submit": "Actualizar"
+                            },
+                            "remove": {
+                                "button": "Eliminar",
+                                "title": "Eliminar Registro",
+                                "submit": "Eliminar",
+                                "confirm": {
+                                    "_": "¿Está seguro que desea eliminar %d filas?",
+                                    "1": "¿Está seguro que desea eliminar 1 fila?"
+                                }
+                            },
+                            "error": {
+                                "system": "Ha ocurrido un error en el sistema (<a target=\"\\\" rel=\"\\ nofollow\" href=\"\\\">Más información&lt;\\\/a&gt;).<\/a>"
+                            },
+                            "multi": {
+                                "title": "Múltiples Valores",
+                                "info": "Los elementos seleccionados contienen diferentes valores para este registro. Para editar y establecer todos los elementos de este registro con el mismo valor, hacer click o tap aquí, de lo contrario conservarán sus valores individuales.",
+                                "restore": "Deshacer Cambios",
+                                "noMulti": "Este registro puede ser editado individualmente, pero no como parte de un grupo."
+                            }
+                        },
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                        "stateRestore": {
+                            "creationModal": {
+                                "button": "Crear",
+                                "name": "Nombre:",
+                                "order": "Clasificación",
+                                "paging": "Paginación",
+                                "search": "Busqueda",
+                                "select": "Seleccionar",
+                                "columns": {
+                                    "search": "Búsqueda de Columna",
+                                    "visible": "Visibilidad de Columna"
+                                },
+                                "title": "Crear Nuevo Estado",
+                                "toggleLabel": "Incluir:"
+                            },
+                            "emptyError": "El nombre no puede estar vacio",
+                            "removeConfirm": "¿Seguro que quiere eliminar este %s?",
+                            "removeError": "Error al eliminar el registro",
+                            "removeJoiner": "y",
+                            "removeSubmit": "Eliminar",
+                            "renameButton": "Cambiar Nombre",
+                            "renameLabel": "Nuevo nombre para %s",
+                            "duplicateError": "Ya existe un Estado con este nombre.",
+                            "emptyStates": "No hay Estados guardados",
+                            "removeTitle": "Remover Estado",
+                            "renameTitle": "Cambiar Nombre Estado"
+                        }
 
-    <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+                    }
 
-    <script src="~/js/CargaArchivoFocrede.js"></script>
+                }
+            );
+        });
+    </script>
+
+    <script type="text/javascript">
+        @Html.Raw(verticalBarChart.CreateChartCode("verticalBarChart"));
+    </script>
+    <script type="text/javascript">
+        @Html.Raw(chart.CreateChartCode("lineChart"));
+    </script>
+
+
 }
+
+   
+

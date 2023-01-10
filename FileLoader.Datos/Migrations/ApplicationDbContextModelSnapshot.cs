@@ -31,28 +31,31 @@ namespace FileLoader.Datos.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Indice"), 1L, 1);
 
                     b.Property<string>("CodigoCuenta")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Id_Moneda")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Id_Reporte")
                         .HasColumnType("int");
 
                     b.Property<string>("NombreCuenta")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("SaldoAlDia")
+                    b.Property<decimal?>("SaldoAlDia")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("SaldoDiaAnterior")
+                    b.Property<decimal?>("SaldoDiaAnterior")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("Variacion")
+                    b.Property<decimal?>("Variacion")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Indice");
 
-                    b.ToTable("BalanceFocrede");
+                    b.HasIndex("Id_Reporte");
+
+                    b.ToTable("BalanceFocrede", (string)null);
                 });
 
             modelBuilder.Entity("FileLoader.Models.Catalogo_Cuentas_FocredeCLS", b =>
@@ -63,13 +66,36 @@ namespace FileLoader.Datos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodigoCuenta"), 1L, 1);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<string>("NombreCuenta")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CodigoCuenta");
 
-                    b.ToTable("Catalogo_CuentasFocrede");
+                    b.ToTable("Catalogo_CuentasFocrede", (string)null);
+                });
+
+            modelBuilder.Entity("FileLoader.Models.Catalogo_ReportesCLS", b =>
+                {
+                    b.Property<int>("Codigo_Reporte")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Codigo_Reporte"), 1L, 1);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre_Reporte")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Codigo_Reporte");
+
+                    b.ToTable("Catalogo_Reportes", (string)null);
                 });
 
             modelBuilder.Entity("FileLoader.Models.DatosReporteCLS", b =>
@@ -80,18 +106,26 @@ namespace FileLoader.Datos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Indice"), 1L, 1);
 
-                    b.Property<DateTime>("Fecha_Reporte")
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("CodigoReporte")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Fecha_Registro")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Moneda")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("Fecha_Reporte")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Usuario_Generador")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Indice");
 
-                    b.ToTable("DatosReporte");
+                    b.HasIndex("CodigoReporte");
+
+                    b.ToTable("DatosReporte", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -296,6 +330,26 @@ namespace FileLoader.Datos.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FileLoader.Models.BalanceFocredeCLS", b =>
+                {
+                    b.HasOne("FileLoader.Models.DatosReporteCLS", "DatosReporteCLS")
+                        .WithMany("listadoFocrede")
+                        .HasForeignKey("Id_Reporte");
+
+                    b.Navigation("DatosReporteCLS");
+                });
+
+            modelBuilder.Entity("FileLoader.Models.DatosReporteCLS", b =>
+                {
+                    b.HasOne("FileLoader.Models.Catalogo_ReportesCLS", "Catalogo_ReportesCLS")
+                        .WithMany()
+                        .HasForeignKey("CodigoReporte")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Catalogo_ReportesCLS");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -345,6 +399,11 @@ namespace FileLoader.Datos.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("FileLoader.Models.DatosReporteCLS", b =>
+                {
+                    b.Navigation("listadoFocrede");
                 });
 #pragma warning restore 612, 618
         }

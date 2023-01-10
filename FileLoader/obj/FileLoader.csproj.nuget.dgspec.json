@@ -252,6 +252,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "ChartJSCore": {
+              "target": "Package",
+              "version": "[3.9.1, )"
+            },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.10, )"

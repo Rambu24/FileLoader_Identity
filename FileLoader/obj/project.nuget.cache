@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "wdYc/eB8QoSRNRwf2sgovrHqtMg19du94XhWA5OXPqChRPPjMrr3Itd7qRX6o+1WlyMh27Kcc15nzC9c1jlmkw==",
+  "dgSpecHash": "YHFoOC/c1Q19ZqDrUwefMWj7X4yqi8YI1/vNYfZxfkVVD7GrZ0xqitYNyajKii82qTrnOo8ptSLa1MMfxKGqSg==",
   "success": true,
   "projectFilePath": "C:\\Users\\LCHINCHILLAB\\source\\repos\\FileLoader\\FileLoader\\FileLoader.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\LCHINCHILLAB\\.nuget\\packages\\chartjscore\\3.9.1\\chartjscore.3.9.1.nupkg.sha512",
     "C:\\Users\\LCHINCHILLAB\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\LCHINCHILLAB\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\LCHINCHILLAB\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",

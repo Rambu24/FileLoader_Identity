@@ -12,6 +12,7 @@ namespace FileLoader.Models
         [Key]
         public int CodigoCuenta { get;  set; }
         public string NombreCuenta { get; set; }
+        public bool Active { get; set; }
 
     }
 }

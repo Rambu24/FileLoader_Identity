@@ -2,6 +2,18 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "ChartJSCore/3.9.1": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/ChartJSCore.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/ChartJSCore.dll": {}
+        }
+      },
       "Humanizer.Core/2.8.26": {
         "type": "package",
         "compile": {
@@ -3739,6 +3751,18 @@
     }
   },
   "libraries": {
+    "ChartJSCore/3.9.1": {
+      "sha512": "cUtKfLpryle2N5LpuIoML5ggCK4XY007ComNbl38I7tf3bxqpyBlWX8qlHLbEl9t6re/MsMHLi552K3pCLzKLw==",
+      "type": "package",
+      "path": "chartjscore/3.9.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "chartjscore.3.9.1.nupkg.sha512",
+        "chartjscore.nuspec",
+        "lib/netstandard2.0/ChartJSCore.dll"
+      ]
+    },
     "Humanizer.Core/2.8.26": {
       "sha512": "OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
       "type": "package",
@@ -10502,6 +10526,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "ChartJSCore >= 3.9.1",
       "FileLoader.Datos >= 1.0.0",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 6.0.10",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.10",
@@ -10559,6 +10584,10 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "ChartJSCore": {
+            "target": "Package",
+            "version": "[3.9.1, )"
+          },
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
             "target": "Package",
             "version": "[6.0.10, )"

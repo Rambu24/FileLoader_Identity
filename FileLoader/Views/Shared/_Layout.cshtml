@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FileLoader</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />    
     <link rel="stylesheet" href="~/FileLoader.styles.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
 </head>
 <body>
 
@@ -55,25 +56,18 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a asp-area="Cliente" asp-controller="CargaArchivos" asp-action="Index">
+                                        <a asp-area="Cliente" asp-controller="CargaArchivos" asp-action="Create">
                                             FOCREDE
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-                        <li class="sidebar-dropdown">
-                            <a href="#">
+                        <li>
+                            <a asp-area="Cliente" asp-controller="CargaArchivos" asp-action="Index">
                                 <i class="fa fa-chart-line"></i>
-                                <span>Gráficos</span>
-                            </a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li>
-                                        <a href="#">FOCREDE</a>
-                                    </li>
-                                </ul>
-                            </div>
+                                <span>Dashboard</span>
+                            </a>                            
                         </li>
 
                         <li class="header-menu">
@@ -140,12 +134,40 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/sweetalert/sweetalert.min.js"></script>
+    <script src="~/lib/sweetalert/sweetalert.min.js"></script>        
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 
+<div id="PopUp" class="modal"
+     style="display:none;
+                    background-color: Black;
+                    filter: alpha(opacity=60);
+                    opacity: 0.6;">
+
+    <div class="justify-content-center align-content-center d-flex">
+
+        <img src="~/img/Loading2.gif" style="
+                 width: 150px;
+                    height: 150px;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-top: -75px;
+                    margin-left: -75px;  " />
+
+        <span class=" h4 text-white-50 text-center mt-1"
+              style=" position: absolute;
+                    top: 70%;
+                    left: 52%;
+                    margin-top: -75px;
+                    margin-left: -75px;
+                      ">
+            Procesando Información...
+        </span>
+    </div>
+</div>
 
 <script>
     jQuery(function ($) {
@@ -182,5 +204,5 @@
 
 
 
-    });
+    });    
 </script>

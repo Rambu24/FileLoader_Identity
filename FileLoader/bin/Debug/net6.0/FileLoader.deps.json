@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "FileLoader/1.0.0": {
         "dependencies": {
+          "ChartJSCore": "3.9.1",
           "FileLoader.Datos": "1.0.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "6.0.10",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.10",
@@ -18,6 +19,17 @@
         },
         "runtime": {
           "FileLoader.dll": {}
+        }
+      },
+      "ChartJSCore/3.9.1": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/ChartJSCore.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.9.1.0"
+          }
         }
       },
       "Humanizer.Core/2.8.26": {
@@ -2378,6 +2390,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "ChartJSCore/3.9.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cUtKfLpryle2N5LpuIoML5ggCK4XY007ComNbl38I7tf3bxqpyBlWX8qlHLbEl9t6re/MsMHLi552K3pCLzKLw==",
+      "path": "chartjscore/3.9.1",
+      "hashPath": "chartjscore.3.9.1.nupkg.sha512"
     },
     "Humanizer.Core/2.8.26": {
       "type": "package",

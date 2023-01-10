@@ -12,18 +12,19 @@ namespace FileLoader.Datos.Data.Repository
     public class Repository<T> : IRepository<T> where T : class
     {
         protected readonly DbContext Context;
-        internal DbSet<T> dbSet;
+        internal DbSet<T> dbSet;        
+        
 
         public Repository(DbContext context)
         {
             Context = context;
-            dbSet = context.Set<T>();
+            dbSet = context.Set<T>();            
         }
         public void Add(T entity)
         {
             dbSet.Add(entity);
         }
-
+        
         public T Get(int id)
         {
             return dbSet.Find(id);
@@ -45,7 +46,7 @@ namespace FileLoader.Datos.Data.Repository
                 {
                     query = query.Include(includeProperty);
                 }
-            }
+            }            
 
             if (orderBy != null)
             {

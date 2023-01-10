@@ -13,6 +13,20 @@
     {
       "library": "sweetalert@2.1.2",
       "destination": "wwwroot/lib/sweetalert/"
+    },
+    {
+      "library": "datatables@1.10.21",
+      "destination": "wwwroot/lib/datatables/",
+      "files": [
+        "js/jquery.dataTables.min.js",
+        "js/dataTables.bootstrap.min.js",
+        "css/dataTables.bootstrap.min.css",
+        "css/jquery.dataTables.min.css"
+      ]
+    },
+    {
+      "library": "Chart.js@4.1.2",
+      "destination": "wwwroot/lib/Chart.js/dist/"
     }
   ]
 }

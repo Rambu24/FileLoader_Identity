@@ -9,7 +9,6 @@ namespace FileLoader.Datos.Data.Repository.IRepository
 {
     public interface IDatosReporteRepository : IRepository<DatosReporteCLS>
     {
-        void Update(DatosReporteCLS datosreporte);
-
+        void Update(DatosReporteCLS datosreporte);        
     }
 }
